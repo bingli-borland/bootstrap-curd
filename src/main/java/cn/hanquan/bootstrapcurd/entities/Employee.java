@@ -1,5 +1,6 @@
 package cn.hanquan.bootstrapcurd.entities;
 
+
 public class Employee {
 
     private Integer id;

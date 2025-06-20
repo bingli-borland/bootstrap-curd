@@ -1,11 +1,10 @@
 spring:
   datasource:
     username: root
-    password: g67108864
-    url: jdbc:mysql://39.97.238.240:33306/test
+    password: password
+    url: jdbc:mysql://localhost:3306/icoffee?useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource  # 指定数据源
-
     initialSize: 5
     minIdle: 5
     maxActive: 20

@@ -1,8 +1,15 @@
 package cn.hanquan.bootstrapcurd.entities;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "department")
 public class Department {
 
+	@Id //这是一个主键
+	@GeneratedValue(strategy = GenerationType.IDENTITY)//自增主键
 	private Integer id;
+	@Column(name = "departmentName", length = 256)
 	private String departmentName;
 
 	public Department() {

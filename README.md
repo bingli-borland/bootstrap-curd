@@ -12,4 +12,6 @@ curl -X POST "http://localhost:8087/jpademo/user" --data-raw 'id=1&name=admin&pa
 
 curl http://localhost:8087/jpademo/user?id=1
 
-curl -X POST "http://localhost:8087/jpademo/user/update;jsessionid=0000HtrK3unMUKxwBi8ZkEVYVpB:f89a24ac-ef77-4fcf-a1bd-70990d09bc05"  --data-raw 'id=1&name=admin&password=B#2008_2108#es1'
+curl -X POST "http://localhost:8087/jpademo/user/update;jsessionid=0000g5frYmxjB6J57KbNRTr0RhQ:f89a24ac-ef77-4fcf-a1bd-70990d09bc05"  --data-raw 'id=1&name=admin&password=B#2008_2108#es1'
+
+curl -X POST -H "Cookie: JSESSIONID=612249ED99B3C3B6F4C2A966B39C5408" "http://localhost:8080/jpademo/user/update" --data-raw 'id=1&name=admin&password=B#2008_2108#es2'

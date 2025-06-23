@@ -42,6 +42,19 @@ public class UserController {
         return "login";
     }
 
+    @PostMapping(value ="/user/update2")
+    public String update2(User user) {
+        Logger logger = LoggerFactory.getLogger(getClass());
+        User saveUser = userRepository.save(user);
+        logger.info("user=" + user);
+        logger.info("saveUser=" + saveUser);
+        user.setPassword("1111111111111111111111111111111111");
+        saveUser = userRepository.save(user);
+        logger.info("after user=" + user);
+        logger.info("after saveUser=" + saveUser);
+        return "login";
+    }
+
     @GetMapping(value ="/user")
     public String get(User user) {
         Logger logger = LoggerFactory.getLogger(getClass());

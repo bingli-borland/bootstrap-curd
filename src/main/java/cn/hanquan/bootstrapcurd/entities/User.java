@@ -9,13 +9,12 @@ import javax.persistence.*;
 public class User {
 
     @Id //这是一个主键
-    @GeneratedValue(strategy = GenerationType.IDENTITY)//自增主键
     private Integer id;
 
     @Column(name = "name", length = 50) //这是和数据表对应的一个列
     private String name;
 
-    @Column //省略默认列名就是属性名
+    @Column(length = 12)
     private String password;
 
     public Integer getId() {

@@ -5,6 +5,7 @@ import cn.hanquan.bootstrapcurd.entities.Department;
 import cn.hanquan.bootstrapcurd.mapper.DepartmentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,6 +68,22 @@ public class DepartmentController {
     @PutMapping("/dept")
     public String updateDepartment(Department department) {
         System.out.println("PutMapping 修改的部门数据：" + department);
+        departmentMapper.updateDept(department);
+        return "redirect:/depts";
+    }
+
+    @PutMapping("/dept/update")
+    @Transactional(rollbackFor = Exception.class)
+    public String update(Department department) {
+        System.out.println("PutMapping 修改的部门数据：" + department);
+        departmentMapper.updateDept(department);
+        department.setDepartmentName("1111111111111111111111111111111111111111111111111111111111111111111111111111111" +
+                "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
+                "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
+                "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
+                "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
+                "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
+                "11111111111111111111111111111111111");
         departmentMapper.updateDept(department);
         return "redirect:/depts";
     }

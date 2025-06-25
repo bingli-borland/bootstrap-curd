@@ -25,3 +25,11 @@ curl -X POST "http://localhost:8080/jpademo/user/update3" --data-raw 'id=1&name=
 ## mybatis
 curl  "http://localhost:8080/jpademo/depts"
 curl -X PUT "http://localhost:8080/jpademo/dept/update" --data-raw 'id=1&departmentName=hhhhhh'
+
+## mybatis与jpa混合使用
+curl -X POST "http://localhost:8080/jpademo/user/update4" --data-raw 'id=1&name=admin&password=B#2008_2108#es3'
+
+curl -X POST "http://localhost:8080/jpademo/user/update5" --data-raw 'id=1&name=admin&password=B#2008_2108#es5'
+
+### 现场场景
+curl -X POST "http://localhost:8080/jpademo/user/update6" --data-raw 'id=1&name=admin&password=B#2008_2108#es6'

@@ -1,6 +1,8 @@
 package cn.hanquan.bootstrapcurd.controller;
 
+import cn.hanquan.bootstrapcurd.entities.Department;
 import cn.hanquan.bootstrapcurd.entities.User;
+import cn.hanquan.bootstrapcurd.mapper.DepartmentMapper;
 import cn.hanquan.bootstrapcurd.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,8 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    DepartmentMapper departmentMapper;
 
     @PostMapping(value ="/user")
     public String insertUser(User user) {
@@ -67,6 +71,46 @@ public class UserController {
         logger.info("after user=" + user);
         logger.info("after saveUser=" + saveUser);
         return "login";
+    }
+
+    @PostMapping(value ="/user/update4")
+    @Transactional
+    public String update4(User user) {
+        Department department = new Department();
+        department.setId(1);
+        department.setDepartmentName("hhhhhhh");
+        departmentMapper.updateDept(department);
+        user.setPassword("1111111111111111111111111111111111");
+        userRepository.save(user);
+        return "login";
+    }
+
+    @PostMapping(value ="/user/update5")
+    @Transactional
+    public String update5(User user) {
+        userRepository.save(user);
+        Department department = new Department();
+        department.setId(1);
+        department.setDepartmentName("1111111111111111111111111111111111111111111111111111111111111111111111111111111" +
+                "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
+                "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
+                "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
+                "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
+                "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
+                "11111111111111111111111111111111111");
+        departmentMapper.updateDept(department);
+        return "login";
+    }
+
+    @PostMapping(value ="/user/update6")
+    @Transactional
+    public String update6(User user) {
+        userRepository.save(user);
+        Department department = new Department();
+        department.setId(1);
+        department.setDepartmentName("mmmmmm");
+        departmentMapper.updateDept(department);
+        throw new RuntimeException("模拟异常");
     }
 
     @GetMapping(value ="/user")

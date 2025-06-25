@@ -33,3 +33,4 @@ curl -X POST "http://localhost:8080/jpademo/user/update5" --data-raw 'id=1&name=
 
 ### 现场场景
 curl -X POST "http://localhost:8080/jpademo/user/update6" --data-raw 'id=1&name=admin&password=B#2008_2108#es6'
+curl -X POST "http://localhost:8080/jpademo/user/update7" --data-raw 'id=1&name=admin&password=B#2008_2108#es7'

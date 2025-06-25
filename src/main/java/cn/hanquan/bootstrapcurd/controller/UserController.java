@@ -112,6 +112,16 @@ public class UserController {
         departmentMapper.updateDept(department);
         throw new RuntimeException("模拟异常");
     }
+    @PostMapping(value ="/user/update7")
+    @Transactional
+    public String update7(User user) {
+        Department department = new Department();
+        department.setId(1);
+        department.setDepartmentName("nnnnnn");
+        departmentMapper.updateDept(department);
+        userRepository.save(user);
+        throw new RuntimeException("模拟异常2");
+    }
 
     @GetMapping(value ="/user")
     public String get(User user) {

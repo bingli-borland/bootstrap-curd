@@ -1,4 +1,6 @@
 spring:
+  jta:
+    enabled: false
   datasource:
     username: root
     password: password

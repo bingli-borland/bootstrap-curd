@@ -1,6 +1,6 @@
 spring:
   jta:
-    enabled: false
+    enabled: true
   datasource:
     username: root
     password: password
@@ -23,10 +23,4 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     useGlobalDataSourceStat: true
 #    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
-  jpa:
-    hibernate:
-      #     更新或者创建数据表结构
-      ddl-auto: update
-    #    控制台显示SQL
-    show-sql: true
 

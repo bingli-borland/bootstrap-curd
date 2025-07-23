@@ -4,7 +4,9 @@ package cn.hanquan.bootstrapcurd.controller;
 import cn.hanquan.bootstrapcurd.entities.Department;
 import cn.hanquan.bootstrapcurd.mapper.DepartmentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +19,15 @@ public class DepartmentController {
     @Autowired
     DepartmentMapper departmentMapper;
 
+    @Autowired
+    TransactionManager transactionManager;
 
     /**
      * 查询所有部门
      */
     @GetMapping("/depts")
     public String list(Model model) {
+        System.out.println("TransactionManager class impl=" + transactionManager.getClass());
         List<Department> departments = departmentMapper.getDept();
         System.out.println("查询所有部门");
         //放在请求域中
@@ -114,5 +119,13 @@ public class DepartmentController {
         return "redirect:/depts";
     }
 
-
+    @PostMapping(value ="/dept/updateonlymybatis")
+    @Transactional
+    public String updateonlymybatis() {
+        Department department = new Department();
+        department.setId(1);
+        department.setDepartmentName("nnnnnn");
+        departmentMapper.updateDept(department);
+        throw new RuntimeException("模拟异常2");
+    }
 }

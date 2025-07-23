@@ -34,3 +34,7 @@ curl -X POST "http://localhost:8080/jpademo/user/update5" --data-raw 'id=1&name=
 ### 现场场景
 curl -X POST "http://localhost:8080/jpademo/user/update6" --data-raw 'id=1&name=admin&password=B#2008_2108#es6'
 curl -X POST "http://localhost:8080/jpademo/user/update7" --data-raw 'id=1&name=admin&password=B#2008_2108#es7'
+
+### 测试仅mybatis回滚（应用自带数据源、中间件事务管理器）
+curl  "http://localhost:8087/jpademo4/depts"
+curl -X POST "http://localhost:8087/jpademo4/dept/updateonlymybatis"

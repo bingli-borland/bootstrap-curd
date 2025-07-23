@@ -3,6 +3,7 @@ package cn.hanquan.bootstrapcurd.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -14,13 +15,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+@ConditionalOnProperty(name = "spring.profiles.active", havingValue = "appds")
 @Configuration
 public class DruidConfig {
 
     @ConfigurationProperties(prefix = "spring.datasource")
     @Bean
     public DataSource druid(){
-       return  new DruidDataSource();
+        return  new DruidDataSource();
     }
 
     //配置Druid的监控
@@ -56,3 +58,4 @@ public class DruidConfig {
         return  bean;
     }
 }
+

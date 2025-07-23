@@ -8,10 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.sql.DataSource;
 
 //@RestController
 @Controller
@@ -22,6 +26,12 @@ public class UserController {
 
     @Autowired
     DepartmentMapper departmentMapper;
+
+    @Autowired
+    TransactionManager transactionManager;
+
+    @Autowired
+    DataSource dataSource;
 
     @PostMapping(value ="/user")
     public String insertUser(User user) {
@@ -129,5 +139,94 @@ public class UserController {
         User u = userRepository.findById(user.getId()).get();
         logger.info("user=" + u);
         return "login";
+    }
+
+    @PostMapping(value ="/user/reset")
+    @Transactional
+    public String reset(User user) {
+        Department department = new Department();
+        department.setId(1);
+        department.setDepartmentName("develop");
+        departmentMapper.updateDept(department);
+        userRepository.saveAndFlush(user);
+        System.out.println("User{id=" + user.getId() + ", name=" + user.getName()  + ", password=" + user.getPassword() + "}");
+        System.out.println("Department{id=1, departmentName=develop}");
+        return "dept/reset";
+    }
+
+    @PostMapping(value ="/user/validation")
+    @Transactional
+    public String validation(HttpServletRequest request) {
+        String id = request.getParameter("id");
+        String name = request.getParameter("name");
+        String password = request.getParameter("password");
+        String deptId = request.getParameter("deptId");
+        String deptName = request.getParameter("deptName");
+        String jta = request.getParameter("jta");
+        String appds = request.getParameter("appds");
+        System.out.println("TransactionManager=" + transactionManager.getClass());
+        System.out.println("DataSource=" + dataSource.getClass());
+        System.out.println("User{id=" + id + ", name=" + name  + ", password=" + password + "}");
+        System.out.println("Department{id=" + deptId + ", departmentName=" + deptName + "}");
+        if ("true".equals(appds) && !"com.alibaba.druid.pool.DruidDataSource".equals(dataSource.getClass().getName())) {
+            return "dept/failed";
+        }
+        if ("true".equals(jta) && "org.springframework.orm.jpa.JpaTransactionManager".equals(transactionManager.getClass().getName())) {
+            return "dept/failed";
+        }
+        User user = userRepository.findByNameAndPassword(name, password);
+        if (user != null && id.equals(String.valueOf(user.getId()))){
+            Department department = departmentMapper.getDeptById(Integer.parseInt(deptId));
+            if (deptName.equals(department.getDepartmentName())) {
+                return "dept/pass";
+            }
+        }
+        return "dept/failed";
+    }
+
+    @PostMapping(value ="/user/test1")
+    @Transactional
+    public String test1(User user) {
+        Department department = new Department();
+        department.setId(1);
+        department.setDepartmentName("test1");
+        departmentMapper.updateDept(department);
+        userRepository.save(user);
+        throw new RuntimeException("模拟异常test1");
+    }
+
+    @PostMapping(value ="/user/test2")
+    @Transactional
+    public String test2(User user) {
+        Department department = new Department();
+        department.setId(1);
+        department.setDepartmentName("test2");
+        departmentMapper.updateDept(department);
+        userRepository.saveAndFlush(user);
+        throw new RuntimeException("模拟异常test2");
+    }
+
+    @PostMapping(value ="/user/test3")
+    @Transactional
+    public String test3(User user) {
+        userRepository.save(user);
+        throw new RuntimeException("模拟异常test3");
+    }
+
+    @PostMapping(value ="/user/test4")
+    @Transactional
+    public String test4(User user) {
+        userRepository.saveAndFlush(user);
+        throw new RuntimeException("test4");
+    }
+
+    @PostMapping(value ="/user/test5")
+    @Transactional
+    public String test5(User user) {
+        Department department = new Department();
+        department.setId(1);
+        department.setDepartmentName("test5");
+        departmentMapper.updateDept(department);
+        throw new RuntimeException("test5");
     }
 }
